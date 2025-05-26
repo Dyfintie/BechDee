@@ -3,7 +3,7 @@ import itemModel from "../../../../models/ItemModel";
 import sellerModel from "../../../../models/SellerModel";
 import { NextResponse } from "next/server";
 
-export async function GET(req, { params }) {
+export async function GET(req, { params }: { params: { id: string } }) {
   try {
     const { id } = await params;
     await connectMongoDB();
