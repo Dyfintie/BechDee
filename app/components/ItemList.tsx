@@ -2,16 +2,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedTopicCard from "./AnimatedTopicCard";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import { Search, MapPin } from "lucide-react";
 import Image from "next/image";
 import Loading from "../Loading";
 import ErrorPage from "../404";
-import { Avatar, AvatarImage } from "./ui/avatar";
 type Topic = {
   _id: string;
   title: string;
-  // add other properties as needed
 };
 
 export default function TopicsList() {
@@ -20,9 +18,7 @@ export default function TopicsList() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email");
   const name = searchParams.get("name");
   useEffect(() => {
     const fetchData = async () => {
@@ -47,12 +43,13 @@ export default function TopicsList() {
 
     fetchData();
   }, []);
-  // Extract unique locations from topics (assuming each topic has a 'location' property)
   const uniqueLocations = Array.from(
-    new Set(topics.map((topic: any) => topic.location).filter(Boolean))
+    new Set(topics.map((topic: Topic & { location?: string }) => topic.location).filter(Boolean))
   );
 
-  const filteredTopics = topics.filter((topic: any) => {
+  type ExtendedTopic = Topic & { location?: string; seller?: string };
+
+  const filteredTopics = topics.filter((topic: ExtendedTopic) => {
     const matchesSearch = topic.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());

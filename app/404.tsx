@@ -11,7 +11,7 @@ const ErrorPage = () => {
           404 - Not Found
         </h1>
         <p className="text-lg text-gray-700 mb-6">
-          Oops! Looks like the page you were looking for doesn't exist.
+          Oops! Looks like the page you were looking for does not exist.
         </p>
         <div className="mb-8">
           <Image

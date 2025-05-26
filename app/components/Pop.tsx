@@ -12,7 +12,7 @@ type Topic = {
 
 const Pop = () => {
   const [topics, setTopics] = useState<Topic[]>([]);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   // const [onHome, setOnhome] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ const Pop = () => {
         const response = await fetch("/api/items", {
           cache: "no-store",
         });
-        
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -33,9 +33,10 @@ const Pop = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
         if (error instanceof Error) {
-          setError(error.message);
+          // setError(error.message);
+          // console.log("Error message:", error);
         } else {
-          setError(String(error));
+          // setError(String(error));
         }
       }
     };
@@ -70,7 +71,7 @@ const Pop = () => {
                 <AnimatedTopicCard
                   key={topic._id}
                   topic={topic}
-                  onHome={false} 
+                  onHome={false}
                 />
               </motion.div>
             ))}

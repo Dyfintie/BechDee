@@ -1,17 +1,31 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Loading from "@/Loading";
 const ViewitemPage = () => {
   const params = useParams();
   const id = params?.id;
-  const router = useRouter();
-  const [topic, setTopic] = useState<any>(null);
+  interface Topic {
+    file: string;
+    title: string;
+    price?: number;
+    content: string;
+    location?: string;
+    category?: string;
+    condition?: string;
+    
+  }
+  interface Seller {
+    sellername: string;
+    sellerimg: string;
+    sellernumber?: string;
+    
+  }
+  const [topic, setTopic] = useState<Topic | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [seller, setSeller] = useState<any>(null);
+  const [seller, setSeller] = useState<Seller | null>(null);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   useEffect(() => {
     const fetchData = async () => {
@@ -49,8 +63,6 @@ const ViewitemPage = () => {
 
   return (
     <div className="mt-20 min-h-screen bg-gray-50">
-      
-
       <div className="max-w-1/2 mx-auto px-4 sm:px-6 lg:px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">

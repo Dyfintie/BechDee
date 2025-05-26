@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Loading from "@/Loading";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import AnimatedTopicCard from "./AnimatedTopicCard";
 
 interface SellerData {
@@ -74,17 +74,14 @@ const SellerProfile = ({ email }) => {
   return (
     <div className=" min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          
         >
           <Card className="card mb-8 overflow-hidden bg-gradient-to-r from-white to-green-50/50 border-0 shadow-xl">
             <CardContent className=" p-8">
               <div className="flex flex-col lg:flex-row gap-8">
-                {/* Profile Image and Basic Info */}
                 <div className="flex flex-col items-center justify-center lg:items-start">
                   <div className="flex-row justify-center items-center">
                     <Avatar className="w-32 h-32 border-4 border-white shadow-lg">
@@ -122,8 +119,7 @@ const SellerProfile = ({ email }) => {
                         <div>
                           <p className="text-sm text-gray-500">Phone</p>
                           <p className="font-medium text-gray-900">
-                            {seller.sellernumber ||
-                              "Go Sell something !!"}
+                            {seller.sellernumber || "Go Sell something !!"}
                           </p>
                         </div>
                       </div>
@@ -132,7 +128,7 @@ const SellerProfile = ({ email }) => {
                         <div>
                           <p className="text-sm text-gray-500">Location</p>
                           <p className="font-medium text-gray-900">
-                            {seller.location}
+                            {/* {seller.location} */}
                           </p>
                         </div>
                       </div>

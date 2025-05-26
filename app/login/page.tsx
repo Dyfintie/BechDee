@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import Image from "next/image";
 import GitHub from "../components/GitHub";
 import Google from "../components/Google";

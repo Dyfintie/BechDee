@@ -1,17 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import RemoveBtn from "./RemoveBtn";
-import { HiPencilAlt } from "react-icons/hi";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from "@mui/icons-material/Edit";
 export default function AnimatedTopicCard({ topic, onHome }) {
-  const [isAuth, setAuth] = useState();
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -68,11 +64,7 @@ export default function AnimatedTopicCard({ topic, onHome }) {
         <span className="font-semibold text-black">{topic.seller}</span>
         {onHome && (
           <div>
-            <RemoveBtn
-              id={topic._id}
-              className="card ml-auto flex justify-end p-2 border-2 border-black rounded-md bg-red-200 text-black hover:bg-red-300 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0)]"
-              title="Delete"
-            />
+            <RemoveBtn id={topic._id} />
 
             <Link href={`/editTopic/${topic._id}`}>
               <button className="btn rounded-md" title="Edit">

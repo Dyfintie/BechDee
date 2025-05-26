@@ -15,9 +15,9 @@ export default function AddTopicWithImage() {
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");
   const [sellernumber, setSellerNumber] = useState("");
-  const [category, setCategory] = useState("");
-  const [tags, setTags] = useState("");
-  const [status, setStatus] = useState("on sale");
+  // const [category, setCategory] = useState("");
+  // const [tags, setTags] = useState("");
+  // const [status, setStatus] = useState("on sale");
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState("");
   const searchParams = useSearchParams();
@@ -116,8 +116,8 @@ export default function AddTopicWithImage() {
     formData.append("sellernumber", sellernumber);
     formData.append("price", price);
     formData.append("location", location);
-    formData.append("category", category);
-    formData.append("tags", tags);
+    // formData.append("category", category);
+    // formData.append("tags", tags);
 
     try {
       const res = await fetch("/api/items", {
