@@ -1,6 +1,6 @@
 import Image from "next/image";
-import GitHub from "../components/GitHub";
-import Google from "../components/Google";
+import GitHubSignInButton from "../components/GitHub";
+import GoogleSignInButton from "../components/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 export default function AuthPage() {
@@ -10,11 +10,11 @@ export default function AuthPage() {
         <div className="flex flex-col gap-3 mt-4">
           <div className="card flex items-center justify-center gap-2 px-9 py-5 bg-black text-white border border-gray-300 rounded-lg shadow hover:bg-gray-200">
             <GoogleIcon style={{ color: "black" }} fontSize="large" />
-            <Google />
+            <GoogleSignInButton />
           </div>
           <div className="card flex items-center justify-center gap-2 px-9 py-5 bg-black text-white border border-gray-300 rounded-lg shadow hover:bg-gray-200">
             <GitHubIcon style={{ color: "black" }} fontSize="large" />
-            <GitHub />
+            <GitHubSignInButton />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
 
-export default function GoogleSignInButton() {
+export default function GitHubSignInButton() {
   return (
     <button
       className="text-xl text-black font-semibold"
