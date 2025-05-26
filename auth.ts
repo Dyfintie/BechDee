@@ -8,7 +8,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user }) {
       try {
         // Save user to DB using your login API
-        const res=await fetch(`${process.env.NEXTAUT  H_URL}/api/login`, {
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return false;
       }
 
-      return true; 
+      return true;
     },
   },
 });
