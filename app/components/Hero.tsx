@@ -1,16 +1,9 @@
-"use client";
-import React, { useState, useEffect } from "react";
+// "use client";
+// import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Loading from "../Loading";
+// import Loading from "../Loading";
 import Image from "next/image";
 const Hero = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <div className="bg-custom  h-screen w-full flex flex-col md:flex-row items-center justify-center p-5 gap-8">
       <motion.div

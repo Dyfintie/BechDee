@@ -278,6 +278,11 @@ export default function AddTopicWithImage() {
                 disabled={isLoading}
               >
                 {isLoading ? "Uploading..." : "Upload Item"}
+                {uploadError && (
+                  <p className="text-red-600 text-sm font-semibold mt-2">
+                    {uploadError}
+                  </p>
+                )}
               </motion.button>
             </div>
           </form>
