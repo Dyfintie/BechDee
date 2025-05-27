@@ -1,7 +1,5 @@
-// "use client";
-// import React, { useState, useEffect } from "react";
+"use client";
 import { motion } from "framer-motion";
-// import Loading from "../Loading";
 import Image from "next/image";
 const Hero = () => {
   return (
