@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Mail } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Loading from "@/Loading";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import AnimatedTopicCard from "./AnimatedTopicCard";
-
+import PhoneEdit from "./PhoneEdit";
 interface SellerData {
   id: string;
   sellername: string;
@@ -114,15 +114,7 @@ const SellerProfile = ({ email }) => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <Phone className="w-5 h-5 text-green-600" />
-                        <div>
-                          <p className="text-sm text-gray-500">Phone</p>
-                          <p className="font-medium text-gray-900">
-                            {seller.sellernumber || "Go Sell something !!"}
-                          </p>
-                        </div>
-                      </div>
+                      <PhoneEdit seller={seller} />
                       <div className="flex items-center gap-3">
                         <MapPin className="w-5 h-5 text-green-600" />
                         <div>
