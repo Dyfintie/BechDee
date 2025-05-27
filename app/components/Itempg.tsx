@@ -15,6 +15,7 @@ export default function AddTopicWithImage() {
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");
   const [sellernumber, setSellerNumber] = useState("");
+  const [uploadError, setUploadError] = useState("");
   // const [category, setCategory] = useState("");
   // const [tags, setTags] = useState("");
   // const [status, setStatus] = useState("on sale");
@@ -47,9 +48,10 @@ export default function AddTopicWithImage() {
 
         const number = data.sellernumber || "";
         setSellerNumber(number);
-        setIsNumberRequired(!(number));
+        setIsNumberRequired(!number);
       } catch (e) {
         console.error("Error in useEffect:", e);
+        setUploadError("Oops! Could not upload the item. Please try again.");
         setIsNumberRequired(true); // Fall back to requiring input
       }
     };
@@ -112,7 +114,6 @@ export default function AddTopicWithImage() {
     formData.append("status", status);
     formData.append("content", content);
     formData.append("file", file);
-    // formData.append("profilepic", profilepic);
     formData.append("sellernumber", sellernumber);
     formData.append("price", price);
     formData.append("location", location);
@@ -222,6 +223,7 @@ export default function AddTopicWithImage() {
                 id="image"
                 type="file"
                 accept="image/*"
+                capture="environment"
                 onChange={handleFileChange}
                 className="w-full px-4 py-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-200"
                 required
@@ -237,6 +239,30 @@ export default function AddTopicWithImage() {
                   />
                 </div>
               )}
+            </div>
+            <div className="flex gap-4 items-center mt-2">
+              <input
+                id="cameraInput"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => document.getElementById("cameraInput").click()}
+                className="px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700"
+              >
+                📸 Take Photo
+              </button>
+
+              <label
+                htmlFor="image"
+                className="px-4 py-2 bg-gray-600 text-white font-semibold rounded hover:bg-gray-700 cursor-pointer"
+              >
+                Upload from Device
+              </label>
             </div>
 
             <div>
@@ -319,6 +345,11 @@ export default function AddTopicWithImage() {
                 disabled={isLoading}
               >
                 {isLoading ? "Uploading..." : "Upload Item"}
+                {uploadError && (
+                  <p className="text-red-600 text-sm font-semibold mt-2">
+                    {uploadError}
+                  </p>
+                )}
               </motion.button>
             </div>
           </form>

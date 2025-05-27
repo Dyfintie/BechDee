@@ -92,7 +92,7 @@ const ViewitemPage = () => {
                   transition={{ delay: 0.1 }}
                   className="text-3xl font-bold text-green-600"
                 >
-                  ${topic.price || "999.99"}
+                  {topic.price || "999.99"}
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
