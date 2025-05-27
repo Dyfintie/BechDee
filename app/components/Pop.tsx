@@ -12,7 +12,7 @@ type Topic = {
 
 const Pop = () => {
   const [topics, setTopics] = useState<Topic[]>([]);
-  // const [error, setError] = useState("");
+  
   // const [onHome, setOnhome] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -25,18 +25,14 @@ const Pop = () => {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
-        console.log(result.items);
-        // if (!Array.isArray(result)) {
-        //   throw new Error("Fetched data is not an array");
-        // }
+        
         setTopics(result.items);
       } catch (error) {
         console.error("Error fetching data:", error);
         if (error instanceof Error) {
-          // setError(error.message);
-          // console.log("Error message:", error);
+          console.log("Error message:", error);
         } else {
-          // setError(String(error));
+          
         }
       }
     };
@@ -53,7 +49,7 @@ const Pop = () => {
   return (
     <motion.div className=" font-work-sans py-12 bg-custom ">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold  text-black mb-6 text-center">
+        <h2 className="mt-28 md:mt-10 text-3xl font-bold  text-black mb-6 text-center">
           Items on sale
         </h2>
 

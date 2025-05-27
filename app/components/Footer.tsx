@@ -4,7 +4,7 @@ import { Github, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-orange-100 max-w-full shadow-md hover:border-primary transition-all duration-500 hover:shadow-lg hover:bg-green-200;">
+    <footer className="bg-orange-100 w-full shadow-md hover:border-primary transition-all duration-500 hover:shadow-lg hover:bg-green-200;">
       <div className="container mx-auto px-4 py-8 ">
         <div className="flex flex-col md:flex-row justify-between items-center ">
           <p className="text-orange-800 font-semibold font-mono mb-4 md:mb-0">

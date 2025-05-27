@@ -43,7 +43,7 @@ const SellerProfile = ({ email }) => {
         const response = await fetch(`/api/login/${email}`);
         // if (!response.ok) throw new Error("Failed to fetch seller items");
         const data = await response.json();
-        console.log("Seller Items:", data);
+
         setSellerItems(data);
       } catch (error) {
         console.error("Error fetching seller items:", error);
@@ -57,7 +57,7 @@ const SellerProfile = ({ email }) => {
         const response = await fetch(`/api/seller/${email}`);
         if (!response.ok) throw new Error("Failed to fetch seller data");
         const data = await response.json();
-        console.log("Seller Data:", data);
+
         setSellerData(data);
       } catch (error) {
         console.error("Error fetching seller data:", error);

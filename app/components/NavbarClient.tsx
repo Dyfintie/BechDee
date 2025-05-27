@@ -96,7 +96,7 @@ const NavbarClient = ({
                 }
               >
                 {label}
-                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-green-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                <span className="absolute inset-x-0 bottom-0 h-0.5  " />
               </motion.button>
             ))}
 
@@ -111,7 +111,7 @@ const NavbarClient = ({
                     )}&name=${encodeURIComponent(name || "")}`
                   )
                 }
-                className="px-8 py-2    border-2 border-black dark:border-white uppercase bg-green-300 text-black transition duration-200 text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
+                className="px-8 py-2  bg-green-300  border-2 border-black dark:border-white uppercase  text-black text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
               >
                 <CurrencyRupeeIcon
                   style={{ color: "green" }}
@@ -133,7 +133,7 @@ const NavbarClient = ({
                     >
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={profilepic || ""} alt={name} />
-                        <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-500 text-white text-sm"></AvatarFallback>
+                        <AvatarFallback className="bg-gradient-to-br  text-white text-sm"></AvatarFallback>
                       </Avatar>
                       <div className="hidden lg:block text-left">
                         <p className="text-sm font-bold text-gray-900">
@@ -151,7 +151,7 @@ const NavbarClient = ({
                             src={profilepic || "/placeholder.svg"}
                             alt={name}
                           />
-                          <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-500 text-white">
+                          <AvatarFallback className="bg-gradient-to-br  text-white">
                             {name[0]?.toUpperCase() || "U"}
                           </AvatarFallback>
                         </Avatar>
@@ -191,7 +191,7 @@ const NavbarClient = ({
             ) : (
               <Button
                 onClick={() => router.push("/login")}
-                className="px-8 py-2 border-2 border-black dark:border-white uppercase bg-green-300 text-black transition duration-200 text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
+                className="px-8 py-2 border-2 border-black dark:border-white uppercase bg-green-300 text-black  text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
               >
                 <LogIn className="h-4 w-4 mr-2" />
                 Login
@@ -214,7 +214,7 @@ const NavbarClient = ({
                   <Link
                     key={label}
                     href={href}
-                    className="flex justify-center font-medium text=md px-8 py-0.5 w-full  border-2 border-black dark:border-white uppercase bg-green-300 text-black transition duration-200 text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
+                    className="flex justify-center font-medium text=md px-8 py-0.5 w-full  border-2 border-black dark:border-white uppercase bg-white text-black transition duration-200 text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
                     onClick={() => setIsOpen(false)}
                   >
                     {label}
@@ -236,7 +236,7 @@ const NavbarClient = ({
                       className="px-8 py-0.5 w-full  border-2 border-black dark:border-white uppercase bg-green-300 text-black transition duration-200 text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
                     >
                       <CurrencyRupeeIcon className="w-5 h-5" />
-                      <span className="font-medium text-md">Sell Item</span>
+                      <span className="font-medium text-md ">Sell Item</span>
                     </button>
 
                     <div className="border-t border-gray-200 pt-4 mt-4">

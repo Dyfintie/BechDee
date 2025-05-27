@@ -6,9 +6,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <section className="min-h-screen w-full bg-custom pt-11 md:pt-5 ">
-        <Hero />
-      </section>
+      <Hero />
       <section className="w-full">
         <Pop />
       </section>
