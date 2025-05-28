@@ -24,7 +24,6 @@ export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
     const formData = await req.formData();
-    // console.log("Received form data:", formData);
     const title = formData.get("title");
     const email = formData.get("email");
     const content = formData.get("content");

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedTopicCard from "./AnimatedTopicCard";
-import {  useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Search, MapPin } from "lucide-react";
 import Image from "next/image";
 import Loading from "../Loading";
@@ -44,7 +44,11 @@ export default function TopicsList() {
     fetchData();
   }, []);
   const uniqueLocations = Array.from(
-    new Set(topics.map((topic: Topic & { location?: string }) => topic.location).filter(Boolean))
+    new Set(
+      topics
+        .map((topic: Topic & { location?: string }) => topic.location)
+        .filter(Boolean)
+    )
   );
 
   type ExtendedTopic = Topic & { location?: string; seller?: string };
@@ -126,7 +130,7 @@ export default function TopicsList() {
       {filteredTopics.length === 0 && (
         <>
           <p className="text-center text-gray-600 mt-8 text-lg">
-            No such destinations found.
+            No Items on Sale 🥲
           </p>
           <Image
             src="/assests/404.gif"

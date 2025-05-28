@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, Pencil, Check } from "lucide-react"; // icons for better UI
+import { Phone, Pencil, Check } from "lucide-react";
 
 const PhoneEdit = ({
   seller,

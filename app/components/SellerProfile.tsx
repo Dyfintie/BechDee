@@ -72,7 +72,7 @@ const SellerProfile = ({ email }) => {
   }
 
   return (
-    <div className=" min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 p-4 md:p-8">
+    <div className="mt-24 min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

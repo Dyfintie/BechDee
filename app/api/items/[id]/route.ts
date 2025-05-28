@@ -1,9 +1,12 @@
 import connectMongoDB from "../../../lib/mongodb";
 import itemModel from "../../../../models/ItemModel";
 import sellerModel from "../../../../models/SellerModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req, { params }: { params: { id: string } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const { id } = await params;
     await connectMongoDB();
@@ -20,44 +23,47 @@ export async function GET(req, { params }: { params: { id: string } }) {
     }
   }
 }
-// interface PatchParams {
-//   params: {
-//     id: string;
-//   };
-// }
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await connectMongoDB();
+    const { id } = await params;
+    const formData = await req.formData();
+    const title = formData.get("title");
+    const content = formData.get("content");
+    const file = formData.get("file");
+    const price = formData.get("price");
+    const location = formData.get("location");
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const base64Image = buffer.toString("base64");
+    await itemModel.findByIdAndUpdate(id, {
+      title,
+      content,
+      file: base64Image,
+      price,
+      location,
+    });
 
-// interface PatchRequestBody {
-//   title: string;
-//   content: string;
-// }
-
-// export async function PATCH(
-//   req: Request,
-//   { params }: PatchParams
-// ): Promise<Response> {
-//   try {
-//     await connectMongoDB();
-//     const { id } = params;
-//     const { title, content }: PatchRequestBody = await req.json();
-//     await itemModel.findByIdAndUpdate(id, { title, content });
-//     return NextResponse.json(
-//       { message: "Updation Successful" },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     console.error("Error updating item:", error);
-//     if (error instanceof Error) {
-//       return NextResponse.json(
-//         { error: `Internal Server Error: ${error.message}` },
-//         { status: 500 }
-//       );
-//     }
-//     return NextResponse.json(
-//       { error: "Internal Server Error" },
-//       { status: 500 }
-//     );
-//   }
-// }
+    return NextResponse.json(
+      { message: "Updation Successful" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error updating item:", error);
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: `Internal Server Error: ${error.message}` },
+        { status: 500 }
+      );
+    }
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
 export async function DELETE(req) {
   try {
     const { searchParams } = new URL(req.url);
