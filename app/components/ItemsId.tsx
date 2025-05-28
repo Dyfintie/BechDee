@@ -4,24 +4,16 @@ import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Loading from "@/Loading";
+import { Itemtype } from "@/types/Item";
+interface Seller {
+  sellername: string;
+  sellerimg: string;
+  sellernumber?: string;
+}
 const ViewitemPage = () => {
   const params = useParams();
   const id = params?.id;
-  interface Topic {
-    file: string;
-    title: string;
-    price?: number;
-    content: string;
-    location?: string;
-    category?: string;
-    condition?: string;
-  }
-  interface Seller {
-    sellername: string;
-    sellerimg: string;
-    sellernumber?: string;
-  }
-  const [topic, setTopic] = useState<Topic | null>(null);
+  const [topic, setTopic] = useState<Itemtype | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [seller, setSeller] = useState<Seller | null>(null);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;

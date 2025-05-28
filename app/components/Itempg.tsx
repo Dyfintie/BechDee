@@ -8,7 +8,6 @@ import { MapPin, Loader2 } from "lucide-react";
 export default function AddTopicWithImage() {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
@@ -19,12 +18,13 @@ export default function AddTopicWithImage() {
   const [location, setLocation] = useState("");
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState("");
+  const [isNumberRequired, setIsNumberRequired] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const seller = searchParams.get("name");
-  const [isNumberRequired, setIsNumberRequired] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     reverseGeocode();
   }, []);

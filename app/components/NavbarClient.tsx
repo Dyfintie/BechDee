@@ -128,7 +128,7 @@ const NavbarClient = ({
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      // className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                      
                       className="search-form"
                     >
                       <Avatar className="w-8 h-8">
@@ -139,7 +139,7 @@ const NavbarClient = ({
                         <p className="text-sm font-bold text-gray-900">
                           {name}
                         </p>
-                        {/* <p className="text-xs text-gray-500">{email.slice(0, 7)}..</p> */}
+                      
                       </div>
                     </motion.button>
                   </DropdownMenuTrigger>
@@ -232,7 +232,7 @@ const NavbarClient = ({
                         );
                         setIsOpen(false);
                       }}
-                      // className="w-full flex items-center gap-3 px-4 py-3 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                      
                       className="px-8 py-0.5 w-full  border-2 border-black dark:border-white uppercase bg-green-300 text-black transition duration-200 text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
                     >
                       <CurrencyRupeeIcon className="w-5 h-5" />
