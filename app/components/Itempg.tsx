@@ -215,7 +215,6 @@ export default function AddTopicWithImage() {
                   id="file"
                   type="file"
                   accept="image/*"
-                  capture="environment"
                   onChange={handleFileChange}
                   className="card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md"
                   required
