@@ -94,9 +94,20 @@ export default function AddTopicWithImage() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files?.[0];
+
+    if (!selectedFile) return;
+
+    if (selectedFile.size > 10 * 1024 * 1024) {
+      setUploadError("Image is size id larger than 10MB ");
+      setFile(null);
+      setPreview("");
+      return;
+    }
+
+    setUploadError("");
     setFile(selectedFile);
-    setPreview(selectedFile ? URL.createObjectURL(selectedFile) : "");
+    setPreview(URL.createObjectURL(selectedFile));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -107,7 +118,6 @@ export default function AddTopicWithImage() {
       return;
     }
 
-    // Force location before submit
     if (!location || !latitude || !longitude) {
       alert("Location access is required. Please click 'Use my location'.");
       return;
@@ -303,6 +313,11 @@ export default function AddTopicWithImage() {
                 <p className="mt-1 text-sm text-red-600">{locationError}</p>
               )}
             </div>
+            {uploadError && (
+              <p className="ml-auto text-red-600 text-lg font-semibold mt-2">
+                {uploadError}
+              </p>
+            )}
 
             <div className="flex justify-end">
               <motion.button
@@ -313,11 +328,6 @@ export default function AddTopicWithImage() {
                 disabled={isLoading}
               >
                 {isLoading ? "Uploading..." : "Upload Item"}
-                {uploadError && (
-                  <p className="text-red-600 text-sm font-semibold mt-2">
-                    {uploadError}
-                  </p>
-                )}
               </motion.button>
             </div>
           </form>
