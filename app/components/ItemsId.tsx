@@ -15,13 +15,11 @@ const ViewitemPage = () => {
     location?: string;
     category?: string;
     condition?: string;
-    
   }
   interface Seller {
     sellername: string;
     sellerimg: string;
     sellernumber?: string;
-    
   }
   const [topic, setTopic] = useState<Topic | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,15 +63,15 @@ const ViewitemPage = () => {
     <div className="mt-20 min-h-screen bg-gray-50">
       <div className="max-w-1/2 mx-auto px-4 sm:px-6 lg:px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className=" card bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="p-6">
               <div className="mb-6">
                 <Image
-                  width={600}
-                  height={400}
+                  width={400}
+                  height={600}
                   src={`data:image/png;base64,${topic.file}`}
                   alt={topic.title}
-                  className="w-full h-64 sm:h-80 object-cover rounded-lg"
+                  className="w-full h-80 sm:h-80 object-cover rounded-lg"
                   priority
                 />
               </div>
@@ -92,7 +90,7 @@ const ViewitemPage = () => {
                   transition={{ delay: 0.1 }}
                   className="text-3xl font-bold text-green-600"
                 >
-                  {topic.price || "999.99"}
+                  ₹{topic.price || "999.99"}
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -132,7 +130,7 @@ const ViewitemPage = () => {
                         {topic.location || "New York, NY"}
                       </p>
                     </div>
-                    <div>
+                    {/* <div>
                       <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
                         Category
                       </h3>
@@ -147,17 +145,16 @@ const ViewitemPage = () => {
                       <p className="mt-1 text-gray-900">
                         {topic.condition || "Like New"}
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 </motion.div>
               </div>
             </div>
           </div>
 
-          {/* WhatsApp Contact Section */}
-          <div className="flex flex-col items-center justify-center h-full space-y-4 bg-white p-6 rounded-xl shadow-lg">
+          <div className="card flex flex-col items-center justify-center h-full space-y-4 bg-white p-6 rounded-xl shadow-lg">
             <h2 className="text-xl font-bold text-gray-800">Contact Seller</h2>
-            <p className="text-gray-600">Scan the QR code below to donate 😁</p>
+            <p className="text-gray-600">SUS QR 🤔</p>
             <Image
               src="/assests/qr.jpg"
               alt="Gpay QR Code"

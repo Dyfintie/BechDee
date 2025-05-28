@@ -7,7 +7,6 @@ import RemoveBtn from "./RemoveBtn";
 import { CurrencyRupee, Edit } from "@mui/icons-material";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 export default function AnimatedTopicCard({ topic, onHome, distance }) {
-  console.log(distance);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

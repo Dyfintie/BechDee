@@ -4,7 +4,7 @@ import { useRouter, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { MapPin, Loader2 } from "lucide-react";
-
+import Loading from "@/Loading";
 export default function EditItemWithImage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -109,6 +109,13 @@ export default function EditItemWithImage() {
       setIsLoading(false);
     }
   };
+  if (isLoading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-custom mt-16">

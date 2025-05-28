@@ -59,7 +59,7 @@ export default function ItemList() {
         console.error("Geolocation error:", err);
         setLocationError("Unable to access location.");
       }
-      console.log(userCoords);
+      
     };
 
     fetchUserLocation();
