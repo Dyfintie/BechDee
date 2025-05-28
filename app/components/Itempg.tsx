@@ -85,8 +85,8 @@ export default function AddTopicWithImage() {
       setLocationError(
         "⚠️ Location permission denied or API error. Please allow location access to continue."
       );
-      // setLatitude("");
-      // setLongitude("");
+      setLatitude(0);
+      setLongitude(0);
       return "";
     } finally {
       setIsGettingLocation(false);
@@ -212,12 +212,21 @@ export default function AddTopicWithImage() {
                   Upload Image
                 </label>
                 <input
-                  id="image"
+                  id="file"
                   type="file"
                   accept="image/*"
                   capture="environment"
                   onChange={handleFileChange}
                   className="card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md"
+                  required
+                />
+                <input
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={handleFileChange}
+                  className="hidden card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md"
                   required
                 />
                 <button
