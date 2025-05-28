@@ -226,8 +226,8 @@ export default function AddTopicWithImage() {
                   capture="environment"
                   onChange={handleFileChange}
                   className="hidden card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md"
-                  required
                 />
+
                 <button
                   type="button"
                   onClick={() => document.getElementById("image").click()}
