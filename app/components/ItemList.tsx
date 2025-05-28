@@ -22,6 +22,7 @@ export default function ItemList() {
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,6 +46,7 @@ export default function ItemList() {
 
     fetchData();
   }, []);
+
   useEffect(() => {
     const fetchUserLocation = async () => {
       try {
@@ -70,6 +72,7 @@ export default function ItemList() {
         .filter(Boolean)
     )
   );
+
   const getCurrentPosition = (): Promise<GeolocationPosition> => {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, {
@@ -79,13 +82,14 @@ export default function ItemList() {
       });
     });
   };
+
   const calculateDistance = (
     lat1: number,
     lon1: number,
     lat2: number,
     lon2: number
   ): number => {
-    const R = 6371000; // Radius of the Earth in meters
+    const R = 6371000;
     const toRad = (value: number) => (value * Math.PI) / 180;
 
     const dLat = toRad(lat2 - lat1);
@@ -113,6 +117,7 @@ export default function ItemList() {
 
     return matchesSearch && matchesLocation && notOwnItem;
   });
+
   const sortedTopics = [...filteredTopics].sort((a, b) => {
     const aDistance =
       a.latitude && a.longitude && userCoords
@@ -206,11 +211,6 @@ export default function ItemList() {
                   onHome={false}
                   distance={distance} // pass to card if needed
                 />
-                {distance !== null && (
-                  <p className="text-sm text-gray-600 text-center mt-1">
-                    📍 {distance} meters away
-                  </p>
-                )}
               </motion.div>
             );
           })}

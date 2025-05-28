@@ -10,6 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import AnimatedTopicCard from "./AnimatedTopicCard";
 import PhoneEdit from "./PhoneEdit";
+import { Itemtype } from "../types/Item";
 interface SellerData {
   id: string;
   sellername: string;
@@ -19,23 +20,9 @@ interface SellerData {
   sellerimg: string;
 }
 
-interface SellerItem {
-  _id: string;
-  title: string;
-  email: string;
-  seller: string;
-  file: string;
-  content: string;
-  price: number;
-  location: string;
-  category: string;
-  tags: string;
-  status: string;
-}
-
 const SellerProfile = ({ email }) => {
   const [activeTab, setActiveTab] = useState("items");
-  const [sellerItems, setSellerItems] = useState<SellerItem[]>([]);
+  const [sellerItems, setSellerItems] = useState<Itemtype[]>([]);
   const [seller, setSellerData] = useState<SellerData | null>(null);
   useEffect(() => {
     const fetchSellerItems = async () => {
@@ -161,7 +148,11 @@ const SellerProfile = ({ email }) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                     >
-                      <AnimatedTopicCard topic={item} onHome={true} />
+                      <AnimatedTopicCard
+                        topic={item}
+                        onHome={true}
+                        distance={null}
+                      />
                     </motion.div>
                   ))}
                 </div>

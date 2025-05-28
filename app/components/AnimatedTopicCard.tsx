@@ -4,8 +4,10 @@ import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import RemoveBtn from "./RemoveBtn";
-import { CurrencyRupee, LocationOn, Edit } from "@mui/icons-material";
-export default function AnimatedTopicCard({ topic, onHome ,distance}) {
+import { CurrencyRupee, Edit } from "@mui/icons-material";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+export default function AnimatedTopicCard({ topic, onHome, distance }) {
+  console.log(distance);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -36,10 +38,22 @@ export default function AnimatedTopicCard({ topic, onHome ,distance}) {
 
         <p className="text-sm text-gray-700 line-clamp-2">{topic.content}</p>
 
-        <div className="flex items-center gap-1 text-sm text-gray-600">
-          <LocationOn fontSize="small" />
-          <span>{distance}</span>
-        </div>
+        {distance!=null ? (
+          <div className="flex items-center gap-1 text-sm text-gray-600">
+            <DirectionsWalkIcon fontSize="small" />
+            <span>{distance}m away</span>
+          </div>
+        ) : onHome ? (
+          <div className="flex items-center gap-1 text-sm text-gray-600">
+            <DirectionsWalkIcon fontSize="small" />
+            <span>Not available!</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1 text-sm text-gray-600">
+            <DirectionsWalkIcon fontSize="small" />
+            <span>Enable location to view distance!</span>
+          </div>
+        )}
 
         {topic.price && (
           <div className="flex items-center text-lg font-semibold text-green-700">
