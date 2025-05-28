@@ -7,13 +7,15 @@ import { Search, MapPin } from "lucide-react";
 import Image from "next/image";
 import Loading from "../Loading";
 import ErrorPage from "../404";
-type Topic = {
-  _id: string;
-  title: string;
-};
+import { Itemtype } from "../types/Item";
 
-export default function TopicsList() {
-  const [topics, setTopics] = useState<Topic[]>([]);
+export default function ItemList() {
+  const [topics, setTopics] = useState<Itemtype[]>([]);
+  const [userCoords, setUserCoords] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
+  const [locationError, setLocationError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,17 +45,63 @@ export default function TopicsList() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchUserLocation = async () => {
+      try {
+        const position = await getCurrentPosition();
+        setUserCoords({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      } catch (err) {
+        console.error("Geolocation error:", err);
+        setLocationError("Unable to access location.");
+      }
+      console.log(userCoords);
+    };
+
+    fetchUserLocation();
+  }, []);
+
   const uniqueLocations = Array.from(
     new Set(
       topics
-        .map((topic: Topic & { location?: string }) => topic.location)
+        .map((topic: Itemtype & { location?: string }) => topic.location)
         .filter(Boolean)
     )
   );
+  const getCurrentPosition = (): Promise<GeolocationPosition> => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 3600000,
+      });
+    });
+  };
+  const calculateDistance = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number => {
+    const R = 6371000; // Radius of the Earth in meters
+    const toRad = (value: number) => (value * Math.PI) / 180;
 
-  type ExtendedTopic = Topic & { location?: string; seller?: string };
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
 
-  const filteredTopics = topics.filter((topic: ExtendedTopic) => {
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return Math.round(R * c);
+  };
+
+  const filteredTopics = topics.filter((topic: Itemtype) => {
     const matchesSearch = topic.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -64,6 +112,27 @@ export default function TopicsList() {
     const notOwnItem = !name || topic.seller !== name;
 
     return matchesSearch && matchesLocation && notOwnItem;
+  });
+  const sortedTopics = [...filteredTopics].sort((a, b) => {
+    const aDistance =
+      a.latitude && a.longitude && userCoords
+        ? calculateDistance(
+            userCoords.latitude,
+            userCoords.longitude,
+            Number(a.latitude),
+            Number(a.longitude)
+          )
+        : Infinity;
+    const bDistance =
+      b.latitude && b.longitude && userCoords
+        ? calculateDistance(
+            userCoords.latitude,
+            userCoords.longitude,
+            Number(b.latitude),
+            Number(b.longitude)
+          )
+        : Infinity;
+    return aDistance - bDistance;
   });
 
   if (isLoading) {
@@ -79,7 +148,6 @@ export default function TopicsList() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      // whileHover={{ scale: 1.3 }}
       className="mx-auto px-4 py-8 bg-custom min-h-screen w-full"
     >
       <div className="mb-8 flex flex-col md:flex-row gap-4">
@@ -113,18 +181,39 @@ export default function TopicsList() {
       </div>
       <motion.div className="flex flex-wrap gap-6 justify-center max-w-full">
         <AnimatePresence>
-          {filteredTopics.map((topic, index) => (
-            <motion.div
-              key={topic._id}
-              initial={{ y: -100, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3, duration: index * 0.3 }}
-              // className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-              className="max-w-sm w-full justify-between gap-3 lg:w-1/3 xl:w-1/4"
-            >
-              <AnimatedTopicCard key={topic._id} topic={topic} onHome={false} />
-            </motion.div>
-          ))}
+          {sortedTopics.map((topic, index) => {
+            const distance =
+              userCoords && topic.latitude && topic.longitude
+                ? calculateDistance(
+                    userCoords.latitude,
+                    userCoords.longitude,
+                    Number(topic.latitude),
+                    Number(topic.longitude)
+                  )
+                : null;
+
+            return (
+              <motion.div
+                key={topic._id}
+                initial={{ y: -100, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3, duration: index * 0.3 }}
+                className="max-w-sm w-full justify-between gap-3 lg:w-1/3 xl:w-1/4"
+              >
+                <AnimatedTopicCard
+                  key={topic._id}
+                  topic={topic}
+                  onHome={false}
+                  distance={distance} // pass to card if needed
+                />
+                {distance !== null && (
+                  <p className="text-sm text-gray-600 text-center mt-1">
+                    📍 {distance} meters away
+                  </p>
+                )}
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </motion.div>
       {filteredTopics.length === 0 && (

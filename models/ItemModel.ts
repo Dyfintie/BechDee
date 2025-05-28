@@ -1,5 +1,4 @@
-import mongoose, { Schema } from "mongoose";
-import { Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface ItemType extends Document {
   title: string;
@@ -10,13 +9,15 @@ export interface ItemType extends Document {
   content?: string;
   price?: number;
   location?: string;
+  latitude: number;
+  longitude: number;
   category?: string;
   tags?: string;
   status?: string;
   date_created?: string;
 }
 
-const itemSchema = new Schema({
+const itemSchema = new Schema<ItemType>({
   title: String,
   email: String,
   seller: String,
@@ -25,6 +26,8 @@ const itemSchema = new Schema({
   content: String,
   price: Number,
   location: String,
+  latitude: Number,
+  longitude: Number,
   category: String,
   tags: String,
   status: {
@@ -33,6 +36,8 @@ const itemSchema = new Schema({
   },
   date_created: String,
 });
+
 const itemModel =
   mongoose.models.items || mongoose.model<ItemType>("items", itemSchema);
+
 export default itemModel;

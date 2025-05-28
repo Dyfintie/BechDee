@@ -9,7 +9,7 @@ const page = () => {
       <Suspense
         fallback={
           <div className="text-center mt-10 text-gray-500">
-            Loading seller profile...
+            Loading...
           </div>
         }
       >

@@ -35,52 +35,63 @@ export async function POST(req: NextRequest) {
     const tags = formData.get("tags");
     const status = formData.get("status");
     const sellernumber = formData.get("sellernumber");
-    // console.log(title, email, content, file, seller, price, location);
-    if (!title || !email || !content || !file) {
+    const latitude = parseFloat(formData.get("latitude"));
+    const longitude = parseFloat(formData.get("longitude"));
+
+
+    if (
+      !title ||
+      !email ||
+      !content ||
+      !file ||
+      !location ||
+      !latitude ||
+      !longitude
+    ) {
       return NextResponse.json(
-        { error: "All fields are required" },
+        { error: "All required fields (including location) must be filled" },
         { status: 400 }
       );
     }
+
     if (sellernumber) {
       await sellerModel.findOneAndUpdate({ email }, { $set: { sellernumber } });
     }
+
     if (file.size > 10 * 1024 * 1024) {
       return NextResponse.json(
         { error: "File size exceeds limit (10MB)" },
         { status: 400 }
       );
     }
+
     const sellerinfo = await sellerModel.findOne({ email });
     const date = new Date();
     const currentDate = `${date.getDate()}-${
       date.getMonth() + 1
     }-${date.getFullYear()}`;
-
-    console.log("Seller info:", sellerinfo);
-    const profilepic = sellerinfo.sellerimg;
+    const profilepic = sellerinfo?.sellerimg || "";
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const base64Image = buffer.toString("base64");
 
-    const item = await itemModel.create({
+    await itemModel.create({
       title,
       email,
-      seller: seller,
+      seller,
       file: base64Image,
       content,
       profilepic,
       price: Number(price),
       location,
+      latitude: Number(latitude),
+      longitude: Number(longitude),
       category: String(category),
       tags: String(tags),
       status: String(status),
       date_created: currentDate,
     });
 
-    // console.log("Item created successfully");
-    console.log("Item created successfully:", item);
-    // Return a success response
     return NextResponse.json(
       { message: "Item created successfully" },
       { status: 201 }

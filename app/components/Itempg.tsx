@@ -6,14 +6,17 @@ import Image from "next/image";
 import { MapPin, Loader2 } from "lucide-react";
 
 export default function AddTopicWithImage() {
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [price, setPrice] = useState("");
-  const [location, setLocation] = useState("");
   const [sellernumber, setSellerNumber] = useState("");
   const [uploadError, setUploadError] = useState("");
+  const [location, setLocation] = useState("");
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState("");
   const searchParams = useSearchParams();
@@ -22,6 +25,9 @@ export default function AddTopicWithImage() {
   const [isNumberRequired, setIsNumberRequired] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  useEffect(() => {
+    reverseGeocode();
+  }, []);
 
   useEffect(() => {
     const fetchSellerNumber = async () => {
@@ -52,42 +58,61 @@ export default function AddTopicWithImage() {
   };
 
   const reverseGeocode = async (): Promise<string> => {
-    const position = await getCurrentPosition();
-    const { latitude, longitude } = position.coords;
     try {
       setIsGettingLocation(true);
       setLocationError("");
-      const url = `https://us1.locationiq.com/v1/reverse?key=${process.env.NEXT_PUBLIC_GeoKey}&lat=${latitude}&lon=${longitude}&format=json`;
+
+      const position = await getCurrentPosition();
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      setLatitude(lat);
+      setLongitude(lon);
+
+      const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
       const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed reverse geocoding");
+
       const data = await res.json();
-      if (!res.ok) {
-        throw new Error("Failed to fetch location from LocationIQ");
-      }
-      setLocation(data.display_name);
-      return (
-        data.display_name || `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`
-      );
+      const display = `${data.city || data.locality || "Unknown"}, ${
+        data.principalSubdivision || ""
+      }, ${data.countryName || ""}`;
+
+      setLocation(display);
+      return display;
     } catch (err) {
-      console.error("LocationIQ Reverse Geocoding Error:", err);
-      setLocationError("Unable to get your location. Please enter manually.");
-      return `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+      console.error("Geolocation failed:", err);
+      setLocationError(
+        "⚠️ Location permission denied or API error. Please allow location access to continue."
+      );
+      // setLatitude("");
+      // setLongitude("");
+      return "";
     } finally {
       setIsGettingLocation(false);
     }
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
     setPreview(selectedFile ? URL.createObjectURL(selectedFile) : "");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!title || !content || !file) {
       alert("Title, content, and an image are required.");
       return;
     }
+
+    // Force location before submit
+    if (!location || !latitude || !longitude) {
+      alert("Location access is required. Please click 'Use my location'.");
+      return;
+    }
+
     setIsLoading(true);
     const formData = new FormData();
     formData.append("title", title);
@@ -98,6 +123,8 @@ export default function AddTopicWithImage() {
     formData.append("sellernumber", sellernumber);
     formData.append("price", price);
     formData.append("location", location);
+    formData.append("latitude", latitude.toString());
+    formData.append("longitude", longitude.toString());
 
     try {
       const res = await fetch("/api/items", {
@@ -108,11 +135,11 @@ export default function AddTopicWithImage() {
       if (res.ok) {
         router.push("/items");
       } else {
-        throw new Error("Failed to create a topic");
+        throw new Error("Failed to upload item");
       }
       router.refresh();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
