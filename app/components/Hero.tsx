@@ -15,14 +15,14 @@ const Hero = () => {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1 }}
-          className="pt-24 md:pt-5 font-bold font-work-sans text-4xl sm:text-5xl lg:text-6xl text-black px-2"
+          className="pt-24 md:pt-5 font-bold font-work-sans text-4xl sm:text-5xl lg:text-6xl text-green-700 px-2"
         >
           Bech
           <motion.span
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="text-primary px-2"
+            className="text-primary px-1"
           >
             De
           </motion.span>
@@ -34,9 +34,9 @@ const Hero = () => {
           transition={{ duration: 1, delay: 2 }}
           className="font-semibold text-2xl sm:text-3xl lg:text-4xl text-black px-2"
         >
-          Books, cooler, fan bechna hai? Becho Befikar
+          Books, cooler, fan bechna hai?
+          <span className="text-green-600">Becho Befikar</span>
         </motion.p>
-
         <motion.p
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
