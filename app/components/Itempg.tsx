@@ -98,7 +98,7 @@ export default function AddTopicWithImage() {
 
     if (!selectedFile) return;
 
-    if (selectedFile.size > 10 * 1024 * 1024) {
+    if (selectedFile.size > 4 * 1024 * 1024) {
       setUploadError("Image is size id larger than 10MB ");
       setFile(null);
       setPreview("");
