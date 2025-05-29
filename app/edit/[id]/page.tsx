@@ -16,7 +16,7 @@ export default function EditItemWithImage() {
   const [uploadError, setUploadError] = useState("");
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   const params = useParams();
@@ -38,6 +38,7 @@ export default function EditItemWithImage() {
         console.error("Error fetching item:", err);
         setUploadError("Unable to load item for editing.");
       }
+      setIsLoading(false);
     };
     if (id) fetchItem();
   }, [id]);
