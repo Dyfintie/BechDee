@@ -24,7 +24,7 @@ const Hero = () => {
             transition={{ duration: 1, delay: 1.5 }}
             className="text-primary px-1"
           >
-            De
+            Dee
           </motion.span>
         </motion.h1>
 
