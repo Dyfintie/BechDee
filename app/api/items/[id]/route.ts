@@ -36,15 +36,24 @@ export async function PATCH(
     const file = formData.get("file");
     const price = formData.get("price");
     const location = formData.get("location");
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const base64Image = buffer.toString("base64");
-    await itemModel.findByIdAndUpdate(id, {
-      title,
-      content,
-      file: base64Image,
-      price,
-      location,
-    });
+    if (file) {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const base64Image = buffer.toString("base64");
+      await itemModel.findByIdAndUpdate(id, {
+        title,
+        content,
+        file: base64Image,
+        price,
+        location,
+      });
+    } else {
+      await itemModel.findByIdAndUpdate(id, {
+        title,
+        content,
+        price,
+        location,
+      });
+    }
 
     return NextResponse.json(
       { message: "Updation Successful" },

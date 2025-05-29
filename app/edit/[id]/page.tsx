@@ -9,6 +9,7 @@ export default function EditItemWithImage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [captureFromCamera, setCaptureFromCamera] = useState(false);
   const [preview, setPreview] = useState("");
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");
@@ -21,7 +22,6 @@ export default function EditItemWithImage() {
   const params = useParams();
   const id = params.id as string;
 
-  // Fetch item data
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -72,12 +72,34 @@ export default function EditItemWithImage() {
     }
   };
 
+  const triggerFileInput = (capture: boolean) => {
+    setCaptureFromCamera(capture);
+
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = "";
+      fileInput.click();
+    }
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setPreview(URL.createObjectURL(selectedFile));
+
+    if (!selectedFile) {
+      console.warn("No file selected");
+      return;
     }
+
+    if (selectedFile.size > 4 * 1024 * 1024) {
+      setUploadError("Image is size id larger than 4MB ");
+      setFile(null);
+      setPreview("");
+      return;
+    }
+
+    setUploadError("");
+    setFile(selectedFile);
+    setPreview(URL.createObjectURL(selectedFile));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -127,7 +149,6 @@ export default function EditItemWithImage() {
         >
           <h1 className="text-3xl font-bold mb-6">Edit Item</h1>
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Title */}
             <div>
               <label htmlFor="title" className="font-semibold text-2xl">
                 Title
@@ -143,7 +164,6 @@ export default function EditItemWithImage() {
               />
             </div>
 
-            {/* Description */}
             <div>
               <label htmlFor="content" className="font-medium text-2xl">
                 Description
@@ -158,27 +178,35 @@ export default function EditItemWithImage() {
               />
             </div>
 
-            {/* Image and Price */}
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <label htmlFor="image" className="text-xl font-semibold">
                   Upload Image
                 </label>
                 <input
-                  id="image"
+                  id="fileInput"
                   type="file"
                   accept="image/*"
-                  capture="environment"
                   onChange={handleFileChange}
-                  className="card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md"
+                  capture={captureFromCamera ? "environment" : undefined}
+                  className="card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md hidden"
                 />
-                <button
-                  type="button"
-                  onClick={() => document.getElementById("image").click()}
-                  className="btn rounded-md mt-2 px-4 py-2 bg-gray-100 hover:bg-gray-200  font-semibold"
-                >
-                  Take Photo
-                </button>
+                <div className="flex">
+                  <button
+                    type="button"
+                    onClick={() => triggerFileInput(true)}
+                    className="btn rounded-md mt-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 font-semibold"
+                  >
+                    Take Photo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => triggerFileInput(false)}
+                    className="btn rounded-md mt-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 font-semibold ml-2"
+                  >
+                    Choose from Gallery
+                  </button>
+                </div>
                 {preview && (
                   <div className="mt-4">
                     <Image
@@ -208,7 +236,6 @@ export default function EditItemWithImage() {
               </div>
             </div>
 
-            {/* Location */}
             <div>
               <label htmlFor="location" className="text-xl font-semibold">
                 Location
@@ -249,7 +276,6 @@ export default function EditItemWithImage() {
               )}
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-end">
               <motion.button
                 whileHover={{ scale: 1.05 }}

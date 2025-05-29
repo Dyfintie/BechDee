@@ -9,6 +9,7 @@ export default function AddTopicWithImage() {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [title, setTitle] = useState("");
+  const [captureFromCamera, setCaptureFromCamera] = useState(false);
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
@@ -93,13 +94,53 @@ export default function AddTopicWithImage() {
     }
   };
 
+  const handleGetLocation = async () => {
+    try {
+      setIsGettingLocation(true);
+      setLocationError("");
+
+      const permission = await navigator.permissions.query({
+        name: "geolocation",
+      });
+
+      if (permission.state === "denied") {
+        setLocationError(
+          "⚠️ Location access is blocked. Please enable it manually in your browser settings."
+        );
+        setIsGettingLocation(false);
+        return;
+      }
+
+      await reverseGeocode();
+    } catch (error) {
+      console.error("Permission check failed:", error);
+      setLocationError(
+        "⚠️ Could not check location permission. Try again or refresh."
+      );
+    } finally {
+      setIsGettingLocation(false);
+    }
+  };
+  const triggerFileInput = (capture: boolean) => {
+    setCaptureFromCamera(capture);
+
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ""; 
+      fileInput.click();
+    }
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
 
-    if (!selectedFile) return;
+    if (!selectedFile) {
+      console.warn("No file selected");
+      return;
+    }
 
     if (selectedFile.size > 4 * 1024 * 1024) {
-      setUploadError("Image is size id larger than 10MB ");
+      setUploadError("Image is size id larger than 4MB ");
       setFile(null);
       setPreview("");
       return;
@@ -222,29 +263,29 @@ export default function AddTopicWithImage() {
                   Upload Image
                 </label>
                 <input
-                  id="file"
+                  id="fileInput"
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
-                  className="card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md"
-                  required
+                  capture={captureFromCamera ? "environment" : undefined}
+                  className="card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md hidden"
                 />
-                <input
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  onChange={handleFileChange}
-                  className="hidden card w-full mt-2 px-3 py-2 border border-gray-300 rounded-md"
-                />
-
-                <button
-                  type="button"
-                  onClick={() => document.getElementById("image").click()}
-                  className="btn rounded-md mt-2 px-4 py-2 bg-gray-100 hover:bg-gray-200  font-semibold"
-                >
-                  Take Photo
-                </button>
+                <div className="flex">
+                  <button
+                    type="button"
+                    onClick={() => triggerFileInput(true)}
+                    className="btn rounded-md mt-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 font-semibold"
+                  >
+                    Take Photo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => triggerFileInput(false)}
+                    className="btn rounded-md mt-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 font-semibold ml-2"
+                  >
+                    Choose from Gallery
+                  </button>
+                </div>
                 {preview && (
                   <div className="mt-4">
                     <Image
@@ -294,7 +335,7 @@ export default function AddTopicWithImage() {
                 />
                 <button
                   type="button"
-                  onClick={reverseGeocode}
+                  onClick={handleGetLocation}
                   disabled={isGettingLocation}
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700"
                   title="Use my current location"
