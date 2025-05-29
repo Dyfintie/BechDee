@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import Loading from "@/Loading";
 import { Itemtype } from "@/types/Item";
 interface Seller {
@@ -147,13 +148,17 @@ const ViewitemPage = () => {
           <div className="card flex flex-col items-center justify-center h-full space-y-4 bg-white p-6 rounded-xl shadow-lg">
             <h2 className="text-xl font-bold text-gray-800">Contact Seller</h2>
             <p className="text-gray-600">SUS QR 🤔</p>
-            <Image
-              src="/assests/qr.jpg"
-              alt="Gpay QR Code"
-              width={200}
-              height={200}
-              className="rounded-lg border border-gray-300"
-            />
+            <Link
+              href={`upi://pay?pa=${process.env.NEXT_PUBLIC_PAY_ID}&pn=${process.env.NEXT_PUBLIC_PAY_NAME}&am=1&cu=INR`}
+            >
+              <Image
+                src="/assests/qr.jpg"
+                alt="Gpay QR Code"
+                width={200}
+                height={200}
+                className="rounded-lg border border-gray-300"
+              />
+            </Link>
             <a
               href={`https://wa.me/${seller.sellernumber || "6942069420"}`}
               target="_blank"
