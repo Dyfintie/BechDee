@@ -115,7 +115,7 @@ const NavbarClient = ({
                 whileTap={{ scale: 0.95 }}
                 onClick={() =>
                   router.push(
-                    "https://wa.me/+919650117150?text=" +
+                    "https://wa.me/" + process.env.NEXT_PUBLIC_ADMIN_NUMBER + "?text=" +
                       encodeURIComponent(
                         "Hello, I would like to book a therapy session."
                       )
