@@ -161,7 +161,7 @@ const ViewitemPage = () => {
               />
             </Link>
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_ADMIN_NUMBER}?text=Hello,%20I%20would%20like%20to%20book%20a%20therapy%20session.`}
+              href="https://wa.me/+919650117150?text=Hello,%20I%20would%20like%20to%20book%20a%20therapy%20session."
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"

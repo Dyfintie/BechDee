@@ -14,7 +14,7 @@ const ViewCoursePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const ADMIN_NAME = process.env.NEXT_PUBLIC_ADMIN || "Admin";
-  const ADMIN_NUMBER = process.env.NEXT_PUBLIC_ADMIN_NUMBER;
+  const ADMIN_NUMBER = process.env.NEXT_PUBLIC_ADMIN_NUMBER || "+919650117150";
   const PAY_ID = process.env.NEXT_PUBLIC_PAY_ID;
   const PAY_NAME = process.env.NEXT_PUBLIC_PAY_NAME;
 
