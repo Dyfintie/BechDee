@@ -23,7 +23,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         console.error("Error syncing user with DB:", err);
         return false;
       }
-
       return true;
     },
   },

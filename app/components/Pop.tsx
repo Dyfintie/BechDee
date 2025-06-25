@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import AnimatedTopicCard from "./AnimatedTopicCard";
+import AnimatedTopicCard from "./CourseCard";
 import { Itemtype } from "@/types/Item";
 
 const Pop = () => {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import sellerModel from "models/SellerModel";
+import sellerModel from "@/models/UserModel";
 import connectMongoDB from "@/lib/mongodb";
 
 import fetch from "node-fetch"; // If you're on Node 18+, fetch is global

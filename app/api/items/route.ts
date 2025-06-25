@@ -1,6 +1,6 @@
 import connectMongoDB from "../../lib/mongodb";
-import itemModel from "../../../models/ItemModel";
-import sellerModel from "../../../models/SellerModel";
+import itemModel from "../../models/CourseModel";
+import sellerModel from "../../models/UserModel";
 import { NextRequest, NextResponse } from "next/server";
 import { console } from "inspector";
 export async function GET() {
@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
     const sellernumber = formData.get("sellernumber");
     const latitude = parseFloat(formData.get("latitude"));
     const longitude = parseFloat(formData.get("longitude"));
-
 
     if (
       !title ||

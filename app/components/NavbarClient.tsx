@@ -21,9 +21,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/items", label: "Items" },
+  { href: "/course", label: "Courses" },
+  { href: "/blog", label: "Blog" },
+  { href: "/therapy", label: "Therapy" },
+  // { href: "/about", label: "About" },
 ];
 
 interface NavbarClientProps {
@@ -31,6 +34,7 @@ interface NavbarClientProps {
   profilepic: string;
   name?: string;
   email?: string;
+  isAdmin:boolean;
 }
 
 const NavbarClient = ({
@@ -38,6 +42,7 @@ const NavbarClient = ({
   profilepic,
   name,
   email,
+  isAdmin,
 }: NavbarClientProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -51,7 +56,7 @@ const NavbarClient = ({
 
   const handleLogout = async () => {
     await fetch("/api/logout", { method: "GET" });
-    router.push("/");
+    router.refresh();
   };
 
   return (
@@ -65,13 +70,13 @@ const NavbarClient = ({
         <div className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center space-x-3">
             <Image
-              width={50}
-              height={50}
-              src="/favicon.ico"
+              width={100}
+              height={100}
+              src="https://d502jbuhuh9wk.cloudfront.net/logos/65c77500e4b0d8a03ab0fa90.png?v=2"
               alt="Logo"
-              className="w-8 h-8"
+              className="w-12 h-12"
             />
-            <span className="text-3xl font-extrabold ">Bechde</span>
+            <h1 className="text-3xl font-extrabold ">Kudam</h1>
           </Link>
 
           <div className="md:hidden">
@@ -91,14 +96,18 @@ const NavbarClient = ({
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn"
-                onClick={() =>
-                  router.push(`${href}?name=${encodeURIComponent(name || "")}`)
-                }
+                // onClick={() =>
+                //   router.push(`${href}?name=${encodeURIComponent(name || "")}`)
+                // }
+                onClick={() => {
+                  router.push(href);
+                }}
               >
                 {label}
                 <span className="absolute inset-x-0 bottom-0 h-0.5  " />
               </motion.button>
             ))}
+            
 
             {isAuth && (
               <motion.button
@@ -106,40 +115,35 @@ const NavbarClient = ({
                 whileTap={{ scale: 0.95 }}
                 onClick={() =>
                   router.push(
-                    `/additem?email=${encodeURIComponent(
-                      email || ""
-                    )}&name=${encodeURIComponent(name || "")}`
+                    "https://wa.me/+919650117150?text=" +
+                      encodeURIComponent(
+                        "Hello, I would like to book a therapy session."
+                      )
                   )
                 }
                 className="px-8 py-2  bg-green-300  border-2 border-black dark:border-white uppercase  text-black text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
               >
-                <CurrencyRupeeIcon
-                  style={{ color: "green" }}
-                  className=" w-4 h-4"
-                />
-                <span className="font-bold  ">Sell</span>
+                <span className="font-bold  ">Book Now!</span>
               </motion.button>
             )}
 
-            {isAuth ? (
+            {isAuth  ? (
               <div className="flex items-center space-x-4">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      
                       className="search-form"
                     >
                       <Avatar className="w-8 h-8">
-                        <AvatarImage src={profilepic || ""} alt={name} />
+                        <AvatarImage src={profilepic || name[0]} alt={name} />
                         <AvatarFallback className="bg-gradient-to-br  text-white text-sm"></AvatarFallback>
                       </Avatar>
                       <div className="hidden lg:block text-left">
                         <p className="text-sm font-bold text-gray-900">
                           {name}
                         </p>
-                      
                       </div>
                     </motion.button>
                   </DropdownMenuTrigger>
@@ -178,7 +182,9 @@ const NavbarClient = ({
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={handleLogout}
+                      onClick={() => {
+                        handleLogout();
+                      }}
                       className="btn mr-2 mb-2 "
                       style={{ color: "red" }}
                     >
@@ -188,15 +194,25 @@ const NavbarClient = ({
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-            ) : (
-              <Button
-                onClick={() => router.push("/login")}
-                className="px-8 py-2 border-2 border-black dark:border-white uppercase bg-green-300 text-black  text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
-              >
-                <LogIn className="h-4 w-4 mr-2" />
-                Login
-              </Button>
-            )}
+            ) : isAdmin ? (
+                <button
+                  onClick={async () => {
+                    await fetch("/api/logout/admin", { method: "GET" });
+                    router.refresh();
+                  }}
+                  className="px-6 py-2 border-2 border-red-600 text-red-600 bg-white text-sm font-semibold rounded-md hover:bg-red-100 transition duration-200"
+                >
+                  Admin Logout
+                </button>
+              ) : (
+                <Button
+                  onClick={() => router.push("/login")}
+                  className="px-8 py-2 border-2 border-black dark:border-white uppercase bg-green-300 text-black  text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
+                >
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Login
+                </Button>
+              )}
           </nav>
         </div>
 
@@ -232,7 +248,6 @@ const NavbarClient = ({
                         );
                         setIsOpen(false);
                       }}
-                      
                       className="px-8 py-0.5 w-full  border-2 border-black dark:border-white uppercase bg-green-300 text-black transition duration-200 text-sm shadow-[1px_1px_rgba(0,0,0),2px_2px_rgba(0,0,0),3px_3px_rgba(0,0,0),4px_4px_rgba(0,0,0),5px_5px_0px_0px_rgba(0,0,0)] dark:shadow-[1px_1px_rgba(255,255,255),2px_2px_rgba(255,255,255),3px_3px_rgba(255,255,255),4px_4px_rgba(255,255,255),5px_5px_0px_0px_rgba(255,255,255)] "
                     >
                       <CurrencyRupeeIcon className="w-5 h-5" />

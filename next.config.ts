@@ -12,6 +12,14 @@ const nextConfig = {
   },
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+
+  // 👇 Add this middleware matcher
+  experimental: {
+    middleware: true,
+  },
+  async redirects() {
+    return [];
+  },
 };
 
 module.exports = nextConfig;

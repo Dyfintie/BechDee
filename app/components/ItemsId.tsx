@@ -105,22 +105,23 @@ const ViewitemPage = () => {
                         Seller
                       </h3>
                       <p className="mt-1 text-gray-900 font-medium">
-                        {seller.sellername}
+                        {/* {seller.sellername || "Devika"} */}
+                        Devika
                       </p>
-                      <Image
+                      {/* <Image
                         src={`data:image/png;base64,${seller.sellerimg}`}
                         alt={seller.sellername}
                         width={50}
                         height={50}
                         className=" card rounded-full"
-                      />
+                      /> */}
                     </div>
                     <div>
                       <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
                         Location
                       </h3>
                       <p className="mt-1 text-gray-900">
-                        {topic.location || "New York, NY"}
+                        {topic.location || "Online"}
                       </p>
                     </div>
                     {/* <div>
@@ -160,7 +161,7 @@ const ViewitemPage = () => {
               />
             </Link>
             <a
-              href={`https://wa.me/${seller.sellernumber || "6942069420"}`}
+              href="https://wa.me/+919650117150?text=Hello,%20I%20would%20like%20to%20book%20a%20therapy%20session."
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"

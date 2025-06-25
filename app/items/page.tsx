@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
-import ItemList from "../components/ItemList";
+import ItemList from "../components/CourseList";
 import { auth } from "../../auth";
-const BlogPage = async() => {
-  const session = await auth(); 
+const BlogPage = async () => {
+  const session = await auth();
   if (session?.user) {
     return (
       <>

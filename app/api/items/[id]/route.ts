@@ -1,6 +1,6 @@
 import connectMongoDB from "../../../lib/mongodb";
-import itemModel from "../../../../models/ItemModel";
-import sellerModel from "../../../../models/SellerModel";
+import itemModel from "../../../models/CourseModel";
+import sellerModel from "../../../models/UserModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

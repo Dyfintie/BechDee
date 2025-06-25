@@ -8,7 +8,7 @@ import Loading from "@/Loading";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import AnimatedTopicCard from "./AnimatedTopicCard";
+import AnimatedTopicCard from "./CourseCard";
 import PhoneEdit from "./PhoneEdit";
 import { Itemtype } from "../types/Item";
 interface SellerData {
